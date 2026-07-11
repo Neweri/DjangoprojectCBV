@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,6 +80,28 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# load_dotenv()
+# USER = os.getenv('MS_SQL_USER')
+# PASSWORD = os.getenv('MS_SQL_PASSWORD')
+# HOST = os.getenv('MS_SQL_SERVER')
+# DATABASE = os.getenv('MS_SQL_DATABASE')
+# DRIVER = os.getenv('MS_SQL_DRIVER')
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': DATABASE,
+#         'PASSWORD': PASSWORD,
+#         'HOST': HOST,
+#         'PORT': '',
+#         'OPTIONS': {
+#             'driver': DRIVER,
+#             'extra_params': 'TrustServerCertificate=yes',
+#         }
+#     }
+# }
 
 
 # Password validation

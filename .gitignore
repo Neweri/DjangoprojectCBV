@@ -173,3 +173,5 @@ Desktop.ini
 .directory
 *.pid
 *.lock
+
+/db.sqlite3

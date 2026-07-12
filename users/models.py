@@ -23,3 +23,7 @@ class User(AbstractUser):
         verbose_name = 'User'
         verbose_name_plural = 'Users'
         ordering = ['id']
+        # abstract = True - модель будет базовым абстрактным классом
+        # app_label = 'my_app' - указание на приложение к которому модель принадлежит
+        # base_manager_name  = 'objects'
+        # db_table = 'users_user' # имя таблицы в БД

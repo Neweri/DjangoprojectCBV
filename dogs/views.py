@@ -50,7 +50,7 @@ def dog_create_view(request):
         'title': 'Добавить собаку',
         'form': DogForm()
     }
-    return render(request, 'dogs/create.html', context)
+    return render(request, 'dogs/create_update.html', context)
 
 
 def dog_detail_view(request, pk):
@@ -70,19 +70,19 @@ def dog_update_view(request, pk):
         if form.is_valid():
             dog_object = form.save()
             dog_object.save()
-            return HttpResponseRedirect(reverse('dogs:dogs_detail', args={pk: pk}))
+            return HttpResponseRedirect(reverse('dogs:dog_detail', args={pk: pk}))
     context = {
         'title': 'Изменить собаку',
         'object': dog_object,
         'form': DogForm(instance=dog_object)
     }
-    return render(request, 'dogs/update.html', context)
+    return render(request, 'dogs/create_update.html', context)
 
 
 def dog_delete_view(request, pk):
     dog_object = get_object_or_404(Dog, pk=pk)
     if request.method == 'POST':
-        dog_object.gelete()
+        dog_object.delete()
         return HttpResponseRedirect(reverse('dogs:dogs_list'))
     context = {
         'title': 'Удалить собаку',

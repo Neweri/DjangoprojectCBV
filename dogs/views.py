@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -51,3 +51,41 @@ def dog_create_view(request):
         'form': DogForm()
     }
     return render(request, 'dogs/create.html', context)
+
+
+def dog_detail_view(request, pk):
+    # dog_object = Dog.objects.get(pk=pk)
+    dog_object = get_object_or_404(Dog, pk=pk)
+    context = {
+        'object': dog_object,
+        'title': f'Вы выбрали: {dog_object}'
+    }
+    return render(request, 'dogs/detail.html', context)
+
+
+def dog_update_view(request, pk):
+    dog_object = get_object_or_404(Dog, pk=pk)
+    if request.method == 'POST':
+        form = DogForm(request.POST, request.FILES, instance=dog_object)
+        if form.is_valid():
+            dog_object = form.save()
+            dog_object.save()
+            return HttpResponseRedirect(reverse('dogs:dogs_detail', args={pk: pk}))
+    context = {
+        'title': 'Изменить собаку',
+        'object': dog_object,
+        'form': DogForm(instance=dog_object)
+    }
+    return render(request, 'dogs/update.html', context)
+
+
+def dog_delete_view(request, pk):
+    dog_object = get_object_or_404(Dog, pk=pk)
+    if request.method == 'POST':
+        dog_object.gelete()
+        return HttpResponseRedirect(reverse('dogs:dogs_list'))
+    context = {
+        'title': 'Удалить собаку',
+        'object': dog_object,
+    }
+    return  render(request, 'dogs/delete.html')

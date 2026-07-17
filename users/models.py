@@ -8,6 +8,9 @@ NULLABLE = {'blank': True, 'null': True}
 class User(AbstractUser):
     username = None
     email = models.EmailField(unique=True, verbose_name='email')
+    first_name = models.CharField(max_length=150, verbose_name='first name', default='Anonymous')
+    last_name = models.CharField(max_length=150, verbose_name='last name', default='Anonymous')
+    avatar = models.ImageField(upload_to='users/media', verbose_name='avatar', **NULLABLE)
     phone = models.CharField(max_length=35, verbose_name='phone number', **NULLABLE)
     telegram = models.CharField(max_length=150, verbose_name='telegram username', **NULLABLE)
     is_active = models.BooleanField(default=True, verbose_name='active')
@@ -16,7 +19,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.email
+        return f'{self.email}\n{self.first_name} {self.last_name}'
 
 
     class Meta:

@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm
 
@@ -18,7 +19,7 @@ def user_register_view(request):
         'title': 'Создать аккаунт',
         'form': UserRegisterForm
     }
-    return render(request, 'users/register.html', context=context)
+    return render(request, 'users/register_update.html', context=context)
 
 
 def user_login_view(request):
@@ -51,7 +52,7 @@ def user_login_view(request):
 #    }
 #    return render(request, 'users/user_profile_read_only.html', context=context)
 
-
+@login_required(login_url='users:user_login')
 def user_profile_view(request):
     user_object = request.user
     context = {
@@ -59,7 +60,7 @@ def user_profile_view(request):
     }
     return render(request, 'users/user_profile_read_only.html', context=context)
 
-
+@login_required(login_url='users:user_login')
 def user_update_view(request):
     user_object = request.user
     if request.method == 'POST':

@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">Мой профиль</div>
             <img class="card-img-top"
-                src="{{ object.photo|user_media }}" width="300" height="600"
+                src="{{ user.avatar|user_media }}" width="300" height="600"
                 alt="Card image cap">
             <div class="card-body">
                 <span class="card-text">Почта: {{user.email}}</span><br>
@@ -18,7 +18,7 @@
             </div>
             <div class="card-footer">
                 <button class="btn btn-outline-warning btn-sm float-right">
-                    <a class="btn btn-link" href="{% url 'users:user_profile' %}">обновить</a>
+                    <a class="btn btn-link" href="{% url 'users:user_update' %}">обновить</a>
                 </button>
             </div>
         </div>

@@ -29,3 +29,7 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(label='пароль', widget=forms.PasswordInput)
 
 
+class UserUpdateForm(UserForm):
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name', 'phone', 'telegram', 'avatar')

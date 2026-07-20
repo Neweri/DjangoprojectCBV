@@ -46,7 +46,8 @@
         "name": "Мухтар",
         "breed": 1,
         "photo": "dogs/shepard_Agc9TGc.jpg",
-        "birth_date": "2025-10-10"
+        "birth_date": "2025-10-10",
+        "owner": null
     }
 },
 {
@@ -56,7 +57,8 @@
         "name": "Альберта",
         "breed": 1,
         "photo": "dogs/sheparddd_CXRx8Gf.jpg",
-        "birth_date": "2024-07-12"
+        "birth_date": "2024-07-12",
+        "owner": null
     }
 },
 {
@@ -66,7 +68,8 @@
         "name": "Майло",
         "breed": 5,
         "photo": "dogs/jackrsl_Kqkuddd.jpg",
-        "birth_date": "2023-07-12"
+        "birth_date": "2023-07-12",
+        "owner": null
     }
 },
 {
@@ -76,7 +79,8 @@
         "name": "Лесси",
         "breed": 2,
         "photo": "dogs/colli_0piM33G.jpg",
-        "birth_date": "2024-02-22"
+        "birth_date": "2024-02-22",
+        "owner": null
     }
 },
 {
@@ -86,7 +90,8 @@
         "name": "Рен",
         "breed": 4,
         "photo": "dogs/chihyahya_9PoJ4wm.jpg",
-        "birth_date": "2025-04-15"
+        "birth_date": "2025-04-15",
+        "owner": null
     }
 },
 {
@@ -96,7 +101,8 @@
         "name": "Пушок",
         "breed": 3,
         "photo": "dogs/king_charls_rG5apCz.jpg",
-        "birth_date": "2026-01-11"
+        "birth_date": "2026-01-11",
+        "owner": null
     }
 },
 {
@@ -106,7 +112,8 @@
         "name": "Марс",
         "breed": 4,
         "photo": "dogs/chihya_WYSejTc.jpg",
-        "birth_date": "2024-07-12"
+        "birth_date": "2024-07-12",
+        "owner": null
     }
 }
 ]

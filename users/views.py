@@ -1,14 +1,15 @@
 import random
 import string
 
+from django import forms
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-
-from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserChangePasswordForm
+from users.models import User
+from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserChangePasswordForm, UserPasswordResetForm
 from users.services import send_register_email, send_new_password_email
 
 def user_register_view(request):
@@ -112,3 +113,31 @@ def user_generate_new_password_view(request):
     request.user.save()
     send_new_password_email(request.user.email, new_password)
     return redirect(reverse('dogs:index'))
+
+
+def user_password_reset_view(request):
+    if request.method == 'POST':
+        form = UserPasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            new_password = ''.join(random.sample(string.ascii_letters + string.digits, k=12))
+            try:
+                user = User.objects.get(email=email)
+                user.set_password(new_password)
+                user.save()
+                send_new_password_email(email, new_password)
+                messages.success(
+                    request,
+                    f'Новый пароль отправлен на почту {email}. Проверьте вашу почту!'
+                )
+                return redirect('users:user_login')
+            except forms.ValidationError:
+                messages.error(request, 'Пользователь с таким email не найден!')
+                return redirect('users:reset_password')
+    else:
+        form = UserPasswordResetForm()
+    context = {
+        'title': 'Восстановление пароля',
+        'form': form
+    }
+    return render(request, 'users/reset_password.html', context=context)

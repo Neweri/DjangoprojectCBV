@@ -1,0 +1,112 @@
+[
+{
+    "model": "dogs.breed",
+    "pk": 1,
+    "fields": {
+        "name": "Немецкая Овчарка",
+        "description": "Хороший сторож, большая и пушистая."
+    }
+},
+{
+    "model": "dogs.breed",
+    "pk": 2,
+    "fields": {
+        "name": "Колли",
+        "description": "Красивая, снималась в кино"
+    }
+},
+{
+    "model": "dogs.breed",
+    "pk": 3,
+    "fields": {
+        "name": "Кинг Чарльз Спаниель",
+        "description": "Очень милая и ленивая порода"
+    }
+},
+{
+    "model": "dogs.breed",
+    "pk": 4,
+    "fields": {
+        "name": "Чихуахуа",
+        "description": "Концентрация злобы!"
+    }
+},
+{
+    "model": "dogs.breed",
+    "pk": 5,
+    "fields": {
+        "name": "Джек Рассел Терьер",
+        "description": "Активная порода, известна по фильму Маска"
+    }
+},
+{
+    "model": "dogs.dog",
+    "pk": 1,
+    "fields": {
+        "name": "Мухтар",
+        "breed": 1,
+        "photo": "dogs/shepard_Agc9TGc.jpg",
+        "birth_date": "2025-10-10"
+    }
+},
+{
+    "model": "dogs.dog",
+    "pk": 2,
+    "fields": {
+        "name": "Альберта",
+        "breed": 1,
+        "photo": "dogs/sheparddd_CXRx8Gf.jpg",
+        "birth_date": "2024-07-12"
+    }
+},
+{
+    "model": "dogs.dog",
+    "pk": 3,
+    "fields": {
+        "name": "Майло",
+        "breed": 5,
+        "photo": "dogs/jackrsl_Kqkuddd.jpg",
+        "birth_date": "2023-07-12"
+    }
+},
+{
+    "model": "dogs.dog",
+    "pk": 4,
+    "fields": {
+        "name": "Лесси",
+        "breed": 2,
+        "photo": "dogs/colli_0piM33G.jpg",
+        "birth_date": "2024-02-22"
+    }
+},
+{
+    "model": "dogs.dog",
+    "pk": 5,
+    "fields": {
+        "name": "Рен",
+        "breed": 4,
+        "photo": "dogs/chihyahya_9PoJ4wm.jpg",
+        "birth_date": "2025-04-15"
+    }
+},
+{
+    "model": "dogs.dog",
+    "pk": 6,
+    "fields": {
+        "name": "Пушок",
+        "breed": 3,
+        "photo": "dogs/king_charls_rG5apCz.jpg",
+        "birth_date": "2026-01-11"
+    }
+},
+{
+    "model": "dogs.dog",
+    "pk": 7,
+    "fields": {
+        "name": "Марс",
+        "breed": 4,
+        "photo": "dogs/chihya_WYSejTc.jpg",
+        "birth_date": "2024-07-12"
+    }
+}
+]

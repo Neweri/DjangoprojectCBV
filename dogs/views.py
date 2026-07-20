@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from dogs.models import Breed, Dog
 from dogs.forms import DogForm
+from users.services import send_dog_creation
 
 
 def index(request):
@@ -40,12 +41,16 @@ def dogs_list_view(request):
     }
     return render(request, 'dogs/dogs.html', context)
 
+
 @login_required(login_url='users:user_login')
 def dog_create_view(request):
     if request.method == 'POST':
         form = DogForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            dog_object = form.save()
+            dog_object.owner = request.user
+            dog_object.save()
+            send_dog_creation(request.user.email, dog_object)
             return HttpResponseRedirect(reverse('dogs:dogs_list'))
     context = {
         'title': 'Добавить собаку',
@@ -63,6 +68,7 @@ def dog_detail_view(request, pk):
     }
     return render(request, 'dogs/detail.html', context)
 
+
 @login_required(login_url='users:user_login')
 def dog_update_view(request, pk):
     dog_object = get_object_or_404(Dog, pk=pk)
@@ -78,6 +84,7 @@ def dog_update_view(request, pk):
         'form': DogForm(instance=dog_object)
     }
     return render(request, 'dogs/create_update.html', context)
+
 
 @login_required(login_url='users:user_login')
 def dog_delete_view(request, pk):

@@ -1,0 +1,82 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$1rTPfoMkR3P0vXhz99nkzj$n4FE3tAx8r9mIqXzJNVCa45gf4onW/ph6UOyxgR795U=",
+        "last_login": "2026-07-20T12:03:45.116Z",
+        "is_superuser": true,
+        "is_staff": true,
+        "date_joined": "2026-07-12T10:29:54.176Z",
+        "email": "admin@web.top",
+        "first_name": "Admin",
+        "last_name": "Adminov",
+        "avatar": "users/media/admin.jpg",
+        "phone": "+76845453423",
+        "telegram": "@admin",
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$ULPCToJoEkS1xsebRPrI6N$S3bo8k+oo42QOhx3w7gjl/X7AEM/GdwNgJc2BYgklMk=",
+        "last_login": "2026-07-20T12:10:13.612Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "date_joined": "2026-07-17T14:57:03Z",
+        "email": "email@web.top",
+        "first_name": "Anonymous",
+        "last_name": "Anonymous",
+        "avatar": "",
+        "phone": null,
+        "telegram": null,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$5DZwpvwK561ceHEaTnyjls$x6dEYTwzbcrdDgXayLFASL4m33LbpFtc7o2+n0Tpycg=",
+        "last_login": "2026-07-17T18:30:56.963Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "date_joined": "2026-07-17T18:30:21.494Z",
+        "email": "qwerty@web.top",
+        "first_name": "awd",
+        "last_name": "awdawd",
+        "avatar": "",
+        "phone": "12412312454",
+        "telegram": "@fdawd",
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$rM4uBsmedGg8logZ2b2QuD$fqdMCbxQSErJYz3PXoZhzTB/6ChG6SKNh769T8mKKSo=",
+        "last_login": "2026-07-20T12:24:53.152Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "date_joined": "2026-07-20T11:51:52.032Z",
+        "email": "gritus22324@gmail.com",
+        "first_name": "Anonymous",
+        "last_name": "Anonymous",
+        "avatar": "",
+        "phone": null,
+        "telegram": null,
+        "is_active": true,
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

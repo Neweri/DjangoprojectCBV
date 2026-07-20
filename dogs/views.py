@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from dogs.models import Breed, Dog
 from dogs.forms import DogForm
+from users.services import send_dog_creation
 
 
 def index(request):
@@ -48,6 +49,7 @@ def dog_create_view(request):
             dog_object = form.save()
             dog_object.owner = request.user
             dog_object.save()
+            send_dog_creation(request.user.email, dog_object)
             return HttpResponseRedirect(reverse('dogs:dogs_list'))
     context = {
         'title': 'Добавить собаку',

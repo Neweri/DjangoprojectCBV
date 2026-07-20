@@ -18,3 +18,12 @@ def send_new_password_email(email, new_password):
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=[email]
     )
+
+
+def send_dog_creation(email, dog_obj):
+    send_mail(
+        subject='Вы добавили нового питомца',
+        message=f'Вы успешно добавили: {dog_obj}',
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[email]
+    )

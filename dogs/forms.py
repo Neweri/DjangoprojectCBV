@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import forms
 
 from dogs.models import Dog
@@ -15,3 +17,10 @@ class DogForm(StyleFormMixin, forms.ModelForm):
         model = Dog
         fields = '__all__' # (все поля которые есть в модели)
         exclude = ('owner',) #(те поля которые есть в модели)
+
+    def clean_birth_date(self):
+        cleaned_data = self.cleaned_data['birth_date']
+        now_year = datetime.now().year
+        if now_year - cleaned_data.year > 32:
+            raise forms.ValidationError('Собака должна быть моложе 32 лет')
+        return cleaned_data

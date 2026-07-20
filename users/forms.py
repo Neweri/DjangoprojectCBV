@@ -39,5 +39,21 @@ class UserUpdateForm(UserForm):
         fields = ('email', 'first_name', 'last_name', 'phone', 'telegram', 'avatar')
 
 
+class UserPasswordResetForm(forms.Form):
+    email = forms.EmailField(
+        label='Email',
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Введите ваш email'
+        })
+    )
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Пользователь с таким email не найден!')
+        return email
+
 class UserChangePasswordForm(StyleFormMixin, PasswordChangeForm):
     pass

@@ -8,11 +8,11 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, PasswordChangeView, LogoutView
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView
 from django.urls import reverse_lazy
 
 from users.models import User
-from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserChangePasswordForm, UserPasswordResetForm
+from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserChangePasswordForm, UserPasswordResetForm,  UserForm
 from users.services import send_register_email, send_new_password_email
 
 class UserRegisterView(CreateView):
@@ -77,13 +77,28 @@ class UserLoginView(LoginView):
 #    }
 #    return render(request, 'users/user_profile_read_only.html', context=context)
 
-@login_required(login_url='users:user_login')
-def user_profile_view(request):
-    user_object = request.user
-    context = {
-        'title': f'Ваш профиль {user_object}'
-    }
-    return render(request, 'users/user_profile_read_only.html', context=context)
+
+class UserProfileView(DetailView):
+    model = User
+    form_class = UserForm
+    template_name = 'users/user_profile_read_only.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data()
+        user_obj = self.get_object()
+        context_data['title'] = f'Профиль пользователя {user_obj}'
+        return context_data
+
+#"@login_required(login_url='users:user_login')
+# def user_profile_view(request):
+#     user_object = request.user
+#     context = {
+#         'title': f'Ваш профиль {user_object}'
+#     }
+#     return render(request, 'users/user_profile_read_only.html', context=context)
 
 @login_required(login_url='users:user_login')
 def user_update_view(request):

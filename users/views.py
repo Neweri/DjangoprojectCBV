@@ -7,26 +7,38 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, PasswordChangeView, LogoutView
+from django.views.generic import CreateView, UpdateView
+from django.urls import reverse_lazy
 
 from users.models import User
 from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserChangePasswordForm, UserPasswordResetForm
 from users.services import send_register_email, send_new_password_email
 
-def user_register_view(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            new_user = form.save()
-            # print(form.cleaned_data['password'])
-            new_user.set_password(form.cleaned_data['password'])
-            new_user.save()
-            send_register_email(new_user.email)
-            return HttpResponseRedirect(reverse('users:user_login'))
-    context = {
-        'title': 'Создать аккаунт',
-        'form': UserRegisterForm
+class UserRegisterView(CreateView):
+    model = User
+    form_class = UserRegisterForm
+    success_url = reverse_lazy('users:user_login')
+    template_name = 'users/register_update.html'
+    extra_context = {
+        'title': 'Создать аккаунт'
     }
-    return render(request, 'users/register_update.html', context=context)
+
+#def user_register_view(request):
+    # if request.method == 'POST':
+    #     form = UserRegisterForm(request.POST)
+    #     if form.is_valid():
+    #         new_user = form.save()
+    #         # print(form.cleaned_data['password'])
+    #         new_user.set_password(form.cleaned_data['password'])
+    #         new_user.save()
+    #         send_register_email(new_user.email)
+    #         return HttpResponseRedirect(reverse('users:user_login'))
+    # context = {
+    #     'title': 'Создать аккаунт',
+    #     'form': UserRegisterForm
+    # }
+    # return render(request, 'users/register_update.html', context=context)
 
 
 def user_login_view(request):

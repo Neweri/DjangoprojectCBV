@@ -19,6 +19,7 @@ class Command(BaseCommand):
         else:
             conn.autocommit=True
             try:
+                # conn.execute(fr'DROP DATABASE {DATABASE}')
                 conn.execute(fr'CREATE DATABASE {DATABASE};')
             except pyodbc.Error as err:
                 print(err)

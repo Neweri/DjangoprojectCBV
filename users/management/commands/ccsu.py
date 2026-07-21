@@ -9,7 +9,7 @@ class Command(BaseCommand):
             'admin': {
                 'email': 'admin@web.top',
                 'first_name': 'Admin',
-                'last_name ': 'Adminov',
+                'last_name': 'Adminov',
                 'is_staff': True,
                 'is_superuser': True,
                 'is_active': True
@@ -17,7 +17,7 @@ class Command(BaseCommand):
             'moderator':{
                 'email': 'moderator@web.top',
                 'first_name': 'Moder',
-                'last_name ': 'Moderov',
+                'last_name': 'Moderov',
                 'is_staff': True,
                 'is_superuser': False,
                 'is_active': True
@@ -25,7 +25,7 @@ class Command(BaseCommand):
             'user':{
                 'email': 'user@web.top',
                 'first_name': 'User',
-                'last_name ': 'Userov',
+                'last_name': 'Userov',
                 'is_staff': False,
                 'is_superuser': False,
                 'is_active': True

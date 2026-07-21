@@ -40,24 +40,30 @@ class UserRegisterView(CreateView):
     # }
     # return render(request, 'users/register_update.html', context=context)
 
-
-def user_login_view(request):
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(email=cd['email'], password=cd['password'])
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponseRedirect(reverse('dogs:index'))
-                else:
-                    return HttpResponse('Аккаунт неактивен!')
-    context = {
-        'title': 'Авторизация',
-        'form': UserLoginForm
+class UserLoginView(LoginView):
+    template_name = 'users/login.html'
+    form_class = UserLoginForm
+    extra_context = {
+        'title': 'Авторизация'
     }
-    return render(request, 'users/login.html', context=context)
+
+#def user_login_view(request):
+    # if request.method == 'POST':
+    #     form = UserLoginForm(request.POST)
+    #     if form.is_valid():
+    #         cd = form.cleaned_data
+    #         user = authenticate(email=cd['email'], password=cd['password'])
+    #         if user is not None:
+    #             if user.is_active:
+    #                 login(request, user)
+    #                 return HttpResponseRedirect(reverse('dogs:index'))
+    #             else:
+    #                 return HttpResponse('Аккаунт неактивен!')
+    # context = {
+    #     'title': 'Авторизация',
+    #     'form': UserLoginForm
+    # }
+    # return render(request, 'users/login.html', context=context)
 
 # если в БД нет значения по умолчанию
 #def user_profile_view(request):

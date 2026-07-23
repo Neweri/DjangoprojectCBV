@@ -57,8 +57,8 @@ class UserLoginView(LoginView):
     #             if user.is_active:
     #                 login(request, user)
     #                 return HttpResponseRedirect(reverse('dogs:index'))
-    #             else:
-    #                 return HttpResponse('Аккаунт неактивен!')
+    #             return HttpResponse('Аккаунт неактивен!')
+    #         return HttpResponse('Нет такого пользователя')
     # context = {
     #     'title': 'Авторизация',
     #     'form': UserLoginForm
@@ -158,9 +158,12 @@ class UserPasswordChangeView(PasswordChangeView):
 #     }
 #     return render(request, 'users/change_password.html', context)
 
-def user_logout_view(request):
-    logout(request)
-    return redirect('dogs:index')
+
+class UserLogoutView(LogoutView):
+    pass
+#def user_logout_view(request):
+    # logout(request)
+    # return redirect('dogs:index')
 
 
 def user_generate_new_password_view(request):

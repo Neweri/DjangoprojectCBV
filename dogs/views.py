@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 
 from dogs.models import Breed, Dog, DogParent
-from dogs.forms import DogForm, DogParentForm
+from dogs.forms import DogForm, DogParentForm, DogCreateForm
 from users.services import send_dog_creation
 
 
@@ -37,6 +37,7 @@ class DogBreedListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(breed_id=self.kwargs.get('pk'))
+        queryset = queryset.filter(is_active=True)
         return queryset
 
 
@@ -49,10 +50,15 @@ class DogListView(ListView):
     }
     template_name = 'dogs/dogs.html'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_active=True)
+        return queryset
+
 
 class DogCreateView(LoginRequiredMixin, CreateView):
     model = Dog
-    form_class = DogForm
+    form_class = DogCreateForm
     template_name = 'dogs/create_update.html'
     extra_context = {
         'title': 'Добавить собаку'

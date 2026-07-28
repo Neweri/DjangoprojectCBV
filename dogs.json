@@ -113,7 +113,7 @@
         "breed": 4,
         "photo": "dogs/chihya_WYSejTc.jpg",
         "birth_date": "2024-07-12",
-        "owner": 7
+        "owner": null
     }
 },
 {
@@ -124,7 +124,7 @@
         "breed": 1,
         "photo": "",
         "birth_date": null,
-        "owner": 7
+        "owner": null
     }
 }
 ]

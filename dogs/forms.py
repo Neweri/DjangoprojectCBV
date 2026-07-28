@@ -15,7 +15,7 @@ class StyleFormMixin:
 class DogForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Dog
-        fields = '__all__' # (все поля которые есть в модели)
+        # fields = '__all__' # (все поля которые есть в модели)
         exclude = ('owner',) #(те поля которые есть в модели)
 
     def clean_birth_date(self):

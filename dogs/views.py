@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -42,13 +42,15 @@ class DogListView(ListView):
     }
     template_name = 'dogs/dogs.html'
 
-# def dogs_list_view(request):
-#     context = {
-#         'objects_list': Dog.objects.all(),
-#         'title': 'Питомник все наши собаки'
-#     }
-#     return render(request, 'dogs/dogs.html', context)
 
+class DogCreateView(CreateView):
+    model = Dog
+    form_class = DogForm
+    template_name = 'dogs/create_update.html'
+    extra_context = {
+        'title': 'Добавить собаку'
+    }
+    success_url = reverse_lazy('dogs:dogs_list')
 
 @login_required(login_url='users:user_login')
 def dog_create_view(request):

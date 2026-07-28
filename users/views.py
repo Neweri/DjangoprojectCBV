@@ -29,21 +29,6 @@ class UserRegisterView(CreateView):
         send_register_email(self.object.email)
         return super().form_valid(form)
 
-#def user_register_view(request):
-    # if request.method == 'POST':
-    #     form = UserRegisterForm(request.POST)
-    #     if form.is_valid():
-    #         new_user = form.save()
-    #         # print(form.cleaned_data['password'])
-    #         new_user.set_password(form.cleaned_data['password'])
-    #         new_user.save()
-    #         send_register_email(new_user.email)
-    #         return HttpResponseRedirect(reverse('users:user_login'))
-    # context = {
-    #     'title': 'Создать аккаунт',
-    #     'form': UserRegisterForm
-    # }
-    # return render(request, 'users/register_update.html', context=context)
 
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
@@ -51,37 +36,6 @@ class UserLoginView(LoginView):
     extra_context = {
         'title': 'Авторизация'
     }
-
-#def user_login_view(request):
-    # if request.method == 'POST':
-    #     form = UserLoginForm(request.POST)
-    #     if form.is_valid():
-    #         cd = form.cleaned_data
-    #         user = authenticate(email=cd['email'], password=cd['password'])
-    #         if user is not None:
-    #             if user.is_active:
-    #                 login(request, user)
-    #                 return HttpResponseRedirect(reverse('dogs:index'))
-    #             return HttpResponse('Аккаунт неактивен!')
-    #         return HttpResponse('Нет такого пользователя')
-    # context = {
-    #     'title': 'Авторизация',
-    #     'form': UserLoginForm
-    # }
-    # return render(request, 'users/login.html', context=context)
-
-# если в БД нет значения по умолчанию
-#def user_profile_view(request):
-#    user_object = request.user
-#    if user_object.first_name and user_object.last_name:
-#        user_name = user_object.first_name + ' ' + user_object.last_name
-#    else:
-#        user_name = 'Anonymous'
-#    context = {
-#        'title': f'Ваш профиль {user_name}'
-#    }
-#    return render(request, 'users/user_profile_read_only.html', context=context)
-
 
 class UserProfileView(DetailView):
     model = User
@@ -97,13 +51,6 @@ class UserProfileView(DetailView):
         context_data['title'] = f'Профиль пользователя {user_obj}'
         return context_data
 
-#"@login_required(login_url='users:user_login')
-# def user_profile_view(request):
-#     user_object = request.user
-#     context = {
-#         'title': f'Ваш профиль {user_object}'
-#     }
-#     return render(request, 'users/user_profile_read_only.html', context=context)
 
 class UserUpdateView(UpdateView):
     model = User
@@ -120,22 +67,6 @@ class UserUpdateView(UpdateView):
         context_data['title'] = f'Изменить профиль: {user_obj}'
         return context_data
 
-#"@login_required(login_url='users:user_login')
-# def user_update_view(request):
-#     user_object = request.user
-#     if request.method == 'POST':
-#         form = UserUpdateForm(request.POST, request.FILES, instance=user_object)
-#         if form.is_valid():
-#             user_object = form.save()
-#             user_object.save()
-#             return HttpResponseRedirect(reverse('users:user_profile'))
-#     context = {
-#         'object': user_object,
-#         'title': f'Изменить профиль {user_object}',
-#         'form': UserUpdateForm(instance=user_object),
-#     }
-#     return render(request, 'users/register_update.html', context=context)
-
 
 class UserPasswordChangeView(PasswordChangeView):
     form_class = UserChangePasswordForm
@@ -145,34 +76,12 @@ class UserPasswordChangeView(PasswordChangeView):
         'title': 'Изменить пароль'
     }
 
-#@login_required(login_url='users:user_login')
-# def user_change_password_view(request):
-#     user_object = request.user
-#     form = UserChangePasswordForm(user_object, request.POST)
-#     if request.method == 'POST':
-#         if form.is_valid():
-#             user_object = form.save()
-#             update_session_auth_hash(request, user_object)
-#             messages.success(request, 'Пароль был успешно изменен!')
-#             return HttpResponseRedirect(reverse('users:user_profile'))
-#         else:
-#             messages.error(request, 'Не удалось изменить пароль!')
-#     context = {
-#         'form': form,
-#         'title': f'Изменить пароль {user_object}'
-#     }
-#     return render(request, 'users/change_password.html', context)
-
 
 class UserLogoutView(LogoutView):
     template_name = 'users/logout.html'
     extra_context = {
         'title': 'Выход из аккаунта'
     }
-
-#def user_logout_view(request):
-    # logout(request)
-    # return redirect('dogs:index')
 
 
 def user_generate_new_password_view(request):

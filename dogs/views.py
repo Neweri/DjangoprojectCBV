@@ -18,22 +18,27 @@ def index(request):
     return render(request, 'dogs/index.html', context)
 
 
-def breeds_list(request):
-    context = {
-        'object_list': Breed.objects.all(),
-        'title': 'Питомник - Все наши породы'
+class BreedListView(ListView):
+    model = Breed
+    extra_context = {
+        'tite': 'Питомник - Все наши породы'
+
     }
-    return render(request, 'dogs/breeds.html', context)
+    template_name = 'dogs/breeds.html'
 
 
-def breeds_dogs_list(request, pk: int):
-    breed_item = Breed.objects.get(pk=pk)
-    context = {
-        'object_list': Dog.objects.filter(breed_id=pk),
-        'title': f'Собаки породы - {breed_item}',
-        'breed_pk': breed_item.pk,
+class DogBreedListView(ListView):
+    model = Dog
+    template_name = 'dogs/dogs.html'
+    extra_context = {
+        'title': 'Собаки выбранной породы'
     }
-    return render(request, 'dogs/dogs.html', context)
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(breed_id=self.kwargs.get('pk'))
+        return queryset
+
+
 
 
 class DogListView(ListView):

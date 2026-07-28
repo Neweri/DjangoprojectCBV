@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django import forms
 
-from dogs.models import Dog
+from dogs.models import Dog, DogParent
 
 
 class StyleFormMixin:
@@ -26,3 +26,8 @@ class DogForm(StyleFormMixin, forms.ModelForm):
                 raise forms.ValidationError('Собака должна быть моложе 32 лет')
             return cleaned_data
         return cleaned_data
+
+class DogParentForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = DogParent
+        fields = '__all__'

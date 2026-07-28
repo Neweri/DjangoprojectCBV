@@ -4,9 +4,10 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import inlineformset_factory
 
-from dogs.models import Breed, Dog
-from dogs.forms import DogForm
+from dogs.models import Breed, Dog, DogParent
+from dogs.forms import DogForm, DogParentForm
 from users.services import send_dog_creation
 
 
@@ -84,9 +85,24 @@ class DogUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data()
+        DogParentFormset = inlineformset_factory(Dog, DogParent, form=DogParentForm, extra=1)
+        if self.request.method == 'POST':
+            formset = DogParentFormset(self.request.POST, instance=self.object)
+        else:
+            formset = DogParentFormset(instance=self.object)
         dog_object = self.get_object()
+        context_data['formset'] = formset
         context_data['title'] = f'Изменить: {dog_object}'
         return context_data
+
+    def form_valid(self, form):
+        context_data = self.get_context_data()
+        formset = context_data['formset']
+        parent_object = form.save()
+        if formset.is_valid():
+            formset.instance = parent_object
+            formset.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('dogs:dog_detail', args=[self.kwargs.get('pk')])

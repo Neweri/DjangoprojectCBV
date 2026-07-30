@@ -19,14 +19,23 @@
             <div class="card-body">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-outline-success">
-                    {% if object %}
-                    Сохранить
+                <input type="submit" class="btn btn-outline-success"
+                value="{% if object %} Сохранить {% else %} Добавить {% endif %}">
+                {% if object %}
+                <a href="{% url 'dogs:dog_toggle' object.pk %}"
+                   class="btn btn-outline-warning float-right">
+                    {% if object.is_active %}
+                    Деактивировать
                     {% else %}
-                    Добавить
+                    Активировать
                     {% endif %}
-                </button>
+                </a>
+                {% endif %}
             </div>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'dogs:dog_detail' object.pk %}"
+                   class="btn btn-outline-primary"><< Назад</a>
         </div>
     </div>
     {% if formset %}

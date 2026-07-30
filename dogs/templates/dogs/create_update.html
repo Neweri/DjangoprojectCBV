@@ -34,8 +34,13 @@
             </div>
         </div>
         <div class="card-footer">
+            {% if object %}
             <a href="{% url 'dogs:dog_detail' object.pk %}"
-                   class="btn btn-outline-primary"><< Назад</a>
+               class="btn btn-outline-primary"><< Назад</a>
+            {% else %}
+            <a href="{% url 'dogs:dogs_list' %}"
+               class="btn btn-outline-primary"><< Назад</a>
+            {% endif %}
         </div>
     </div>
     {% if formset %}

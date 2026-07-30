@@ -3,8 +3,9 @@ from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
+from django.core.exceptions import PermissionDenied
 
 from dogs.models import Breed, Dog, DogParent
 from dogs.forms import DogForm, DogParentForm, DogCreateForm
@@ -83,6 +84,8 @@ class DogCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('dogs:dogs_list')
 
     def form_valid(self, form):
+        if self.request.user.role != UserRoles.USER:
+            raise PermissionDenied()
         dog_object = form.save()
         dog_object.owner = self.request.user
         dog_object.save()
@@ -140,10 +143,12 @@ class DogUpdateView(LoginRequiredMixin, UpdateView):
         return dog_object
 
 
-class DogDeleteView(LoginRequiredMixin, DeleteView):
+class DogDeleteView(PermissionRequiredMixin, DeleteView):
     model = Dog
     template_name = 'dogs/delete.html'
     success_url = reverse_lazy('dogs:dogs_list')
+    permission_required = 'dogs.delete_dog'
+    permission_denied_message = 'У вас нет необходимых прав для этого действия'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data()

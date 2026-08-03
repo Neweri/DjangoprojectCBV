@@ -10,18 +10,19 @@
             <p class="card-text">Кличка: {{ object.name|title }}</p>
             <span class="text-muted">Дата рождения: {{ object.birth_date|default:"-" }}</span><br>
             {% if object.owner %}
-            <span class="text-muted">Имя хозяина: {{ object.owner.first_name|default:"Не указано" }}</span><br>
-            <span class="text-muted">Телефон: {{ object.owner.phone|default:"Не указано" }}</span><br>
-            <span class="text-muted">Телеграм: {{ object.owner.telegram|default:"Не указано" }}</span><br>
-            <span class="text-muted">Эл. почта: {{ object.owner.email|default:"Без хозяина" }}</span><br>
+                <span class="text-muted">Имя хозяина: {{ object.owner.first_name|default:"Не указано" }}</span><br>
+                <span class="text-muted">Телефон: {{ object.owner.phone|default:"Не указано" }}</span><br>
+                <span class="text-muted">Телеграм: {{ object.owner.telegram|default:"Не указано" }}</span><br>
+                <span class="text-muted">Эл. почта: {{ object.owner.email|default:"Без хозяина" }}</span><br>
+                <span class="text-muted">Просмотры: {{ object.views }}</span><br>
             {% else %}
-            <span class="text-muted">Без хозяина</span>
+                <span class="text-muted">Без хозяина</span>
             {% endif %}
         </div>
         <div class="card-footer">
             {% if user == object.owner %}
-            <a class="btn btn-link" href="{% url 'dogs:dog_update' object.pk %}">изменить</a>
-            <a class="btn btn-link" href="{% url 'dogs:dog_delete' object.pk %}">удалить</a>
+                <a class="btn btn-link" href="{% url 'dogs:dog_update' object.pk %}">изменить</a>
+                <a class="btn btn-link" href="{% url 'dogs:dog_delete' object.pk %}">удалить</a>
             {% endif %}
     </div>
 </div>

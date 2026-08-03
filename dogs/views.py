@@ -104,12 +104,15 @@ class DogDetailView(DetailView):
         context_data['title'] = f'Подробная информация: {dog_object}'
         dog_object_increase = get_object_or_404(Dog, pk=dog_object.pk)
         # if dog_object.owner != self.request.user and not self.request.user.is_staff:
-        if dog_object.owner != self.request.user and self.request.user.role not in (UserRoles.ADMIN, UserRoles.MODERATOR):
+        if self.request.user.is_authenticated:
+            if dog_object.owner != self.request.user and self.request.user.role not in (UserRoles.ADMIN, UserRoles.MODERATOR):
+                dog_object_increase.views_count()
+            if dog_object.owner:
+                object_owner_email = dog_object.owner.email
+                if dog_object_increase.views % 20 == 0 and dog_object_increase.views != 0:
+                    send_views_mail(dog_object, object_owner_email, dog_object_increase.views)
+        else:
             dog_object_increase.views_count()
-        if dog_object.owner:
-            object_owner_email = dog_object.owner.email
-            if dog_object_increase.views % 20 == 0 and dog_object_increase.views != 0:
-                send_views_mail(dog_object, object_owner_email, dog_object_increase.views)
         return context_data
 
 

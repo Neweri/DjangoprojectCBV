@@ -8,7 +8,8 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, PasswordChangeView, LogoutView
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView, DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from users.models import User
@@ -83,6 +84,17 @@ class UserLogoutView(LogoutView):
         'title': 'Выход из аккаунта'
     }
 
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+    extra_context = {
+        'title': 'Все наши пользователи'
+    }
+    template_name = 'users/users.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_active=True)
+        return queryset
 
 def user_generate_new_password_view(request):
     new_password = ''.join(random.sample(string.ascii_letters + string.digits, k=12))

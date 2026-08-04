@@ -28,14 +28,15 @@
                         <li><a href="{% url 'dogs:breeds' %}" class="text-white">Породы</a></li>
                         <li><a href="{% url 'dogs:dogs_list' %}" class="text-white">Собаки</a></li>
                         <li><a href="{% url 'dogs:dog_create' %}" class="text-white">Добавить собаку</a></li>
+                        <li><a href="{% url 'reviews:reviews_list' %}" class="text-white">Наши отзывы</a></li>
                         {% if user.is_authenticated %}
-                            <li><a href="{% url 'users:users_list' %}" class="text-white">Все пользователи</a></li>
-                            <li><a href="{% url 'users:user_profile' %}" class="text-white">Профиль</a></li>
-                            <span class="text-white">{{ user.email }}</span>
-                            <form method="post" action="{% url 'users:user_logout' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger btn-sm">Выход</button>
-                            </form>
+                        <li><a href="{% url 'users:users_list' %}" class="text-white">Все пользователи</a></li>
+                        <li><a href="{% url 'users:user_profile' %}" class="text-white">Профиль</a></li>
+                        <span class="text-white">{{ user.email }}</span>
+                        <form method="post" action="{% url 'users:user_logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Выход</button>
+                        </form>
                         {% else %}
                             <li><a href="{% url 'users:user_login' %}" class="text-white">Вход</a></li>
                             <li><a href="{% url 'users:user_register' %}" class="text-white">Регистрация</a></li>

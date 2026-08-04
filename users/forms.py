@@ -33,7 +33,7 @@ class UserLoginForm(StyleFormMixin, AuthenticationForm):
 class UserUpdateForm(UserForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'phone', 'telegram', 'avatar')
+        fields = ('email', 'first_name', 'last_name', 'phone', 'telegram', 'max_messenger' , 'avatar')
 
 
 class UserPasswordResetForm(forms.Form):

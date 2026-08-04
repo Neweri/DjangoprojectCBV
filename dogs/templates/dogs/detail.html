@@ -14,6 +14,7 @@
                 <span class="text-muted">Телефон: {{ object.owner.phone|default:"Не указано" }}</span><br>
                 <span class="text-muted">Телеграм: {{ object.owner.telegram|default:"Не указано" }}</span><br>
                 <span class="text-muted">Эл. почта: {{ object.owner.email|default:"Без хозяина" }}</span><br>
+                <span class="text-muted">MAX хозяина: {{ object.owner.max_messenger|default:"Без хозяина" }}</span><br>
                 <span class="text-muted">Просмотры: {{ object.views }}</span><br>
             {% else %}
                 <span class="text-muted">Без хозяина</span>

@@ -96,6 +96,17 @@ class UserListView(LoginRequiredMixin, ListView):
         queryset = queryset.filter(is_active=True)
         return queryset
 
+class UserDetailView(DetailView):
+    model = User
+    template_name = 'users/user_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data()
+        user_object = self.get_object()
+        context_data['title'] = f'Профиль пользователя {user_object}'
+        return context_data
+
+
 def user_generate_new_password_view(request):
     new_password = ''.join(random.sample(string.ascii_letters + string.digits, k=12))
     request.user.set_password(new_password)

@@ -7,6 +7,14 @@
         {% include "reviews/includes/inc_review_card.html" with object=object %}
         {% endfor %}
     </div>
+    <a href="{% url 'reviews:review_create' %}"
+        class="btn btn-outline-primary m2 float-left">Добавить отзыв</a>
+    {% if user.role == 'admin' or user.role == 'moderator' %}
+        <a href="{% url 'reviews:reviews_deactivated' %}"
+           class="btn btn-outline-secondary m2 float-right">Неактивные отзывы</a>
+        <a href="{% url 'reviews:reviews_list' %}"
+           class="btn btn-outline-success m2 float-right">Активные отзывы</a>
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -38,7 +38,7 @@ class ReviewDeactivatedListView(ListView):
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'reviews/create.html'
+    template_name = 'reviews/create_update.html'
     extra_context = {
         'title': 'Новый отзыв'
     }
@@ -46,13 +46,13 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         if self.request.user.role not in (UserRoles.USER, UserRoles.ADMIN):
             return HttpResponseForbidden
-        review_object = form.save()
-        print(review_object.slug)
-        if review_object.slug == 'temp_slug':
-            review_object.slug = generate_slug()
-            print(review_object.slug)
-        review_object.author = self.request.user
-        review_object.save()
+        self.object = form.save()
+        print(self.object.slug)
+        if self.object.slug == 'temp_slug':
+            self.object.slug = generate_slug()
+            print(self.object.slug)
+        self.object.author = self.request.user
+        self.object.save()
         return super().form_valid(form)
 
 
@@ -67,10 +67,10 @@ class ReviewDetailView(DetailView):
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'reviews/update.html'
+    template_name = 'reviews/create_update.html'
 
     def get_success_url(self):
-        return reverse('reviews:review_detail')
+        return reverse('reviews:review_detail', args=[self.kwargs.get('slug')])
 
     def get_object(self, queryset=None):
         review_object = super().get_object()

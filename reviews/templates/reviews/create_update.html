@@ -1,0 +1,21 @@
+{% extends 'dogs/base.html' %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="row">
+    <div class="col-6">
+        <div class="card-header">
+            {% if object %}
+            Редактировать
+            {% else %}
+            Добавить отзыв
+            {% endif %}
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-outline-success"
+                value="{% if object %}Сохранить{% else %}Добавить{% endif %}">
+        </div>
+    </div>
+</form>
+
+{% endblock %}

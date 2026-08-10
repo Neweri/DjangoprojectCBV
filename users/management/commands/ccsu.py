@@ -15,7 +15,7 @@ class Command(BaseCommand):
                 'is_superuser': True,
                 'is_active': True
             },
-            'moderator':{
+            'moderator': {
                 'email': 'moderator@web.top',
                 'role': 'moderator',
                 'first_name': 'Moder',
@@ -24,7 +24,7 @@ class Command(BaseCommand):
                 'is_superuser': False,
                 'is_active': True
             },
-            'user':{
+            'user': {
                 'email': 'user@web.top',
                 'role': 'User',
                 'first_name': 'User',

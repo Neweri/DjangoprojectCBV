@@ -9,6 +9,7 @@ from reviews.forms import ReviewForm
 from reviews.utils import generate_slug
 from users.models import UserRoles
 
+
 class ReviewListView(ListView):
     model = Review
     extra_context = {
@@ -84,6 +85,7 @@ class ReviewUpdateView(LoginRequiredMixin, UpdateView):
         review_object = self.get_object()
         context_data['title'] = f'Изменить отзыв {review_object.dog}'
         return context_data
+
 
 class ReviewDeleteView(PermissionRequiredMixin, DeleteView):
     model = Review

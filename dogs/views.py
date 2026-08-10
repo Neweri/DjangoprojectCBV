@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect, Http404
+from django.http import Http404
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.decorators import login_required
+
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
@@ -51,7 +51,6 @@ class BreedSearchListView(ListView):
     model = Breed
     template_name = 'dogs/breeds.html'
 
-
     def get_query(self):
         return self.request.GET.get('q')
 
@@ -65,8 +64,6 @@ class BreedSearchListView(ListView):
         context_data = super().get_context_data()
         context_data['title'] = f'Результаты поискового запроса: {self.get_query()}'
         return context_data
-
-
 
 
 class DogListView(ListView):
@@ -99,6 +96,7 @@ class DogDeactivatedListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(is_active=False, owner=self.request.user)
         return queryset
 
+
 class DogSearchListView(ListView):
     model = Dog
     template_name = 'dogs/dogs.html'
@@ -119,6 +117,7 @@ class DogSearchListView(ListView):
         context_data = super().get_context_data()
         context_data['title'] = f'Результаты поискового запроса: {self.get_query()}'
         return context_data
+
 
 class DogCreateView(LoginRequiredMixin, CreateView):
     model = Dog

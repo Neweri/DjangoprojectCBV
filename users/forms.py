@@ -30,10 +30,11 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
 class UserLoginForm(StyleFormMixin, AuthenticationForm):
     pass
 
+
 class UserUpdateForm(UserForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'phone', 'telegram', 'max_messenger' , 'avatar')
+        fields = ('email', 'first_name', 'last_name', 'phone', 'telegram', 'max_messenger', 'avatar')
 
 
 class UserPasswordResetForm(forms.Form):
@@ -51,6 +52,7 @@ class UserPasswordResetForm(forms.Form):
         if not User.objects.filter(email=email).exists():
             raise forms.ValidationError('Пользователь с таким email не найден!')
         return email
+
 
 class UserChangePasswordForm(StyleFormMixin, PasswordChangeForm):
     def clean_new_password2(self):

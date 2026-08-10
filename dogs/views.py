@@ -82,7 +82,7 @@ class DogDeactivatedListView(LoginRequiredMixin, ListView):
 class DogSearchListView(ListView):
     model = Dog
     template_name = 'dogs/dogs_search_results.html'
-    queryset = Dog.objects.filter(name__icontains='м')
+    #queryset = Dog.objects.filter(name__icontains='м')
 
     def get_queryset(self):
         return Dog.objects.filter(

@@ -15,6 +15,7 @@ class ReviewListView(ListView):
         'title': 'Наши отзывы'
     }
     template_name = 'reviews/reviews.html'
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -28,6 +29,7 @@ class ReviewDeactivatedListView(ListView):
         'title': 'На модерации'
     }
     template_name = 'reviews/reviews.html'
+    paginate_by = 2
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -38,19 +40,17 @@ class ReviewDeactivatedListView(ListView):
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'reviews/create.html'
+    template_name = 'reviews/create_update.html'
     extra_context = {
         'title': 'Новый отзыв'
     }
 
     def form_valid(self, form):
         if self.request.user.role not in (UserRoles.USER, UserRoles.ADMIN):
-            return HttpResponseForbidden
+            return HttpResponseForbidden()
         review_object = form.save()
-        print(review_object.slug)
         if review_object.slug == 'temp_slug':
             review_object.slug = generate_slug()
-            print(review_object.slug)
         review_object.author = self.request.user
         review_object.save()
         return super().form_valid(form)
@@ -67,14 +67,15 @@ class ReviewDetailView(DetailView):
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     model = Review
     form_class = ReviewForm
-    template_name = 'reviews/update.html'
+    template_name = 'reviews/create_update.html'
 
     def get_success_url(self):
-        return reverse('reviews:review_detail')
+        return reverse('reviews:review_detail', args=[self.kwargs.get('slug')])
 
     def get_object(self, queryset=None):
         review_object = super().get_object()
         if review_object.author != self.request.user and self.request.user not in (UserRoles.ADMIN, UserRoles.MODERATOR):
+
             raise PermissionDenied()
         return review_object
 

@@ -6,6 +6,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 
 from dogs.models import Breed, Dog, DogParent
 from dogs.forms import DogForm, DogParentForm, DogCreateForm, DogAdminForm
@@ -29,6 +30,7 @@ class BreedListView(ListView):
 
     }
     template_name = 'dogs/breeds.html'
+    paginate_by = 3
 
 
 class DogBreedListView(ListView):
@@ -37,11 +39,32 @@ class DogBreedListView(ListView):
     extra_context = {
         'title': 'Собаки выбранной породы'
     }
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(breed_id=self.kwargs.get('pk'))
         queryset = queryset.filter(is_active=True)
         return queryset
+
+
+class BreedSearchListView(ListView):
+    model = Breed
+    template_name = 'dogs/breeds.html'
+
+
+    def get_query(self):
+        return self.request.GET.get('q')
+
+    def get_queryset(self):
+        object_list = Breed.objects.filter(
+            Q(name__icontains=self.get_query())
+        )
+        return object_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data()
+        context_data['title'] = f'Результаты поискового запроса: {self.get_query()}'
+        return context_data
 
 
 
@@ -52,6 +75,7 @@ class DogListView(ListView):
         'title': 'Питомник все наши собаки'
     }
     template_name = 'dogs/dogs.html'
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -65,6 +89,7 @@ class DogDeactivatedListView(LoginRequiredMixin, ListView):
         'title': 'Питомник - неактивные собаки'
     }
     template_name = 'dogs/dogs.html'
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -74,6 +99,26 @@ class DogDeactivatedListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(is_active=False, owner=self.request.user)
         return queryset
 
+class DogSearchListView(ListView):
+    model = Dog
+    template_name = 'dogs/dogs.html'
+    # extra_context = {
+    #     'title': 'Результаты поискового запроса'
+    # }
+
+    def get_query(self):
+        return self.request.GET.get('q')
+
+    def get_queryset(self):
+        object_list = Dog.objects.filter(
+            Q(name__icontains=self.get_query()), is_active=True,
+        )
+        return object_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data()
+        context_data['title'] = f'Результаты поискового запроса: {self.get_query()}'
+        return context_data
 
 class DogCreateView(LoginRequiredMixin, CreateView):
     model = Dog

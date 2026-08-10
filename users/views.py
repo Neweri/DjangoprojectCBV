@@ -3,9 +3,6 @@ import string
 
 from django import forms
 from django.shortcuts import render, reverse, redirect
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, PasswordChangeView, LogoutView
 from django.views.generic import CreateView, UpdateView, DetailView, ListView
@@ -13,8 +10,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from users.models import User
-from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserChangePasswordForm, UserPasswordResetForm,  UserForm
+from users.forms import UserRegisterForm, UserLoginForm, UserUpdateForm, UserChangePasswordForm, UserPasswordResetForm, UserForm
 from users.services import send_register_email, send_new_password_email
+
 
 class UserRegisterView(CreateView):
     model = User
@@ -25,7 +23,7 @@ class UserRegisterView(CreateView):
         'title': 'Создать аккаунт'
     }
 
-    def form_valid(self,form):
+    def form_valid(self, form):
         self.object = form.save()
         send_register_email(self.object.email)
         return super().form_valid(form)
@@ -37,6 +35,7 @@ class UserLoginView(LoginView):
     extra_context = {
         'title': 'Авторизация'
     }
+
 
 class UserProfileView(DetailView):
     model = User
@@ -84,6 +83,7 @@ class UserLogoutView(LogoutView):
         'title': 'Выход из аккаунта'
     }
 
+
 class UserListView(LoginRequiredMixin, ListView):
     model = User
     extra_context = {
@@ -96,6 +96,7 @@ class UserListView(LoginRequiredMixin, ListView):
         queryset = super().get_queryset()
         queryset = queryset.filter(is_active=True)
         return queryset
+
 
 class UserDetailView(DetailView):
     model = User

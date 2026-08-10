@@ -13,7 +13,7 @@ urlpatterns = [
     path('breeds/<int:pk>/dogs', DogBreedListView.as_view(), name='breeds_dogs'),
     path('breeds/search/', BreedSearchListView.as_view(), name='breeds_search'),
 
-    #dogs
+    # dogs
     path('dogs/', DogListView.as_view(), name='dogs_list'),
     path('dogs/deactivated', DogDeactivatedListView.as_view(), name='dogs_list_deactivated'),
     path('dogs/search/', DogSearchListView.as_view(), name='dogs_search'),

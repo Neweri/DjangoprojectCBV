@@ -43,7 +43,6 @@ class DogParent(models.Model):
     breed = models.ForeignKey(Breed, on_delete=models.CASCADE, verbose_name='Порода родителя')
     birth_date = models.DateField(**NULLABLE, verbose_name='Дата рождения родителя')
 
-
     def __str__(self):
         return f'{self.name} ({self.breed})'
 

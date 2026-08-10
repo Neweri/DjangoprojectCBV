@@ -1,0 +1,80 @@
+[
+{
+    "model": "reviews.review",
+    "pk": 1,
+    "fields": {
+        "title": "Новый отзыв",
+        "slug": "new_review",
+        "content": "Проверка создания",
+        "created": "2026-08-04T17:49:01.381Z",
+        "sign_of_review": true,
+        "author": 1,
+        "dog": 1
+    }
+},
+{
+    "model": "reviews.review",
+    "pk": 3,
+    "fields": {
+        "title": "awd",
+        "slug": "a07bVQmBdP62s46WkKxA",
+        "content": "awd",
+        "created": "2026-08-06T16:45:04.690Z",
+        "sign_of_review": false,
+        "author": 3,
+        "dog": 2
+    }
+},
+{
+    "model": "reviews.review",
+    "pk": 4,
+    "fields": {
+        "title": "wad",
+        "slug": "nzGXbmdiLYnUuZqIpSlo",
+        "content": "awd",
+        "created": "2026-08-06T17:07:22.256Z",
+        "sign_of_review": true,
+        "author": 3,
+        "dog": 1
+    }
+},
+{
+    "model": "reviews.review",
+    "pk": 5,
+    "fields": {
+        "title": "awdawd",
+        "slug": "yspIaFtfXH2b41duhF5u",
+        "content": "awdawd",
+        "created": "2026-08-06T17:21:43.811Z",
+        "sign_of_review": true,
+        "author": 3,
+        "dog": 4
+    }
+},
+{
+    "model": "reviews.review",
+    "pk": 6,
+    "fields": {
+        "title": "awdawd",
+        "slug": "yIstXDcu56AHJNiDu7Pc",
+        "content": "awdawd",
+        "created": "2026-08-06T17:22:08.634Z",
+        "sign_of_review": false,
+        "author": 1,
+        "dog": 2
+    }
+},
+{
+    "model": "reviews.review",
+    "pk": 7,
+    "fields": {
+        "title": "awdawd",
+        "slug": "BmwFundXHC1DwTobt5k4",
+        "content": "awdwad",
+        "created": "2026-08-06T17:24:36.323Z",
+        "sign_of_review": true,
+        "author": 1,
+        "dog": 6
+    }
+}
+]

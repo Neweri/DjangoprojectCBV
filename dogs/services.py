@@ -1,6 +1,7 @@
 from django.core.mail import send_mail
 from django.conf import settings
 
+
 def send_views_mail(dog_object, owner_email, views_count):
     send_mail(
         subject=f'{views_count} просмотров {dog_object}',

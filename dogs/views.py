@@ -47,6 +47,26 @@ class DogBreedListView(ListView):
         return queryset
 
 
+class BreedSearchListView(ListView):
+    model = Breed
+    template_name = 'dogs/breeds.html'
+
+
+    def get_query(self):
+        return self.request.GET.get('q')
+
+    def get_queryset(self):
+        object_list = Breed.objects.filter(
+            Q(name__icontains=self.get_query())
+        )
+        return object_list
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data()
+        context_data['title'] = f'Результаты поискового запроса: {self.get_query()}'
+        return context_data
+
+
 
 
 class DogListView(ListView):
@@ -81,14 +101,24 @@ class DogDeactivatedListView(LoginRequiredMixin, ListView):
 
 class DogSearchListView(ListView):
     model = Dog
-    template_name = 'dogs/dogs_search_results.html'
-    #queryset = Dog.objects.filter(name__icontains='м')
+    template_name = 'dogs/dogs.html'
+    # extra_context = {
+    #     'title': 'Результаты поискового запроса'
+    # }
+
+    def get_query(self):
+        return self.request.GET.get('q')
 
     def get_queryset(self):
-        return Dog.objects.filter(
-            Q(name__icontains='м')
+        object_list = Dog.objects.filter(
+            Q(name__icontains=self.get_query()), is_active=True,
         )
+        return object_list
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context_data = super().get_context_data()
+        context_data['title'] = f'Результаты поискового запроса: {self.get_query()}'
+        return context_data
 
 class DogCreateView(LoginRequiredMixin, CreateView):
     model = Dog

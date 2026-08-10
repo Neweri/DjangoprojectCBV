@@ -1,6 +1,6 @@
 from django.urls import path
 from dogs.views import index, BreedListView, DogBreedListView, DogListView, DogCreateView, DogDetailView, DogUpdateView, \
-    DogDeleteView, DogDeactivatedListView, dog_toggle_activity, DogSearchListView
+    DogDeleteView, DogDeactivatedListView, dog_toggle_activity, DogSearchListView, BreedSearchListView
 from dogs.apps import DogsConfig
 
 
@@ -11,6 +11,7 @@ urlpatterns = [
     # breeds
     path('breeds/', BreedListView.as_view(), name='breeds'),
     path('breeds/<int:pk>/dogs', DogBreedListView.as_view(), name='breeds_dogs'),
+    path('breeds/search/', BreedSearchListView.as_view(), name='breeds_search'),
 
     #dogs
     path('dogs/', DogListView.as_view(), name='dogs_list'),

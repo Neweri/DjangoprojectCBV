@@ -167,7 +167,8 @@ class DogUpdateView(LoginRequiredMixin, UpdateView):
     def get_form_class(self):
         dog_forms = {
             'admin': DogAdminForm,
-            'moderator': DogForm
+            'moderator': DogForm,
+            'user': DogForm,
         }
         user_role = self.request.user.role
         dog_form_class = dog_forms[user_role]

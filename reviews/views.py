@@ -1,8 +1,10 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import reverse, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
+
 
 from reviews.models import Review
 from reviews.forms import ReviewForm
@@ -45,14 +47,15 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     extra_context = {
         'title': 'Новый отзыв'
     }
+    success_url = reverse_lazy('reviews:reviews_list')
 
     def form_valid(self, form):
         if self.request.user.role not in (UserRoles.USER, UserRoles.ADMIN):
             return HttpResponseForbidden()
-        review_object = form.save()
+        review_object = form.save(commit=False)
+        review_object.author = self.request.user
         if review_object.slug == 'temp_slug':
             review_object.slug = generate_slug()
-        review_object.author = self.request.user
         review_object.save()
         return super().form_valid(form)
 
@@ -87,13 +90,20 @@ class ReviewUpdateView(LoginRequiredMixin, UpdateView):
         return context_data
 
 
-class ReviewDeleteView(PermissionRequiredMixin, DeleteView):
+class ReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Review
     template_name = 'reviews/delete.html'
     permission_required = 'reviews.delete_review'
     extra_context = {
         'title': 'Удалить отзыв'
     }
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def test_func(self):
+        review = self.get_object()
+        user = self.request.user
+        return review.author == user or user.is_superuser
 
     def get_success_url(self):
         return reverse('reviews:reviews_list')

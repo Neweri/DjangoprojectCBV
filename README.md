@@ -31,6 +31,7 @@
 ```
 7) Выполните команды для заполнения БД используя фикстуры:
 ```bash
+  python manage.py loaddata users.json
   python manage.py loaddata dogs.json
   python manage.py loaddata reviews.json
 ```

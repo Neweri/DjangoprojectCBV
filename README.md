@@ -9,7 +9,7 @@
 
 1) После настройки виртуального окружения установите зависимости из файла requirements.txt
 ```bash
-  pip install -r requirments.txt
+  pip install -r requirements.txt
 ```
 
 2) Заполните файл .env согласно .env_sample
@@ -31,6 +31,7 @@
 ```
 7) Выполните команды для заполнения БД используя фикстуры:
 ```bash
+  python manage.py loaddata users.json
   python manage.py loaddata dogs.json
   python manage.py loaddata reviews.json
 ```
